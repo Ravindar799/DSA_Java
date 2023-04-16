@@ -7,7 +7,7 @@
       }
 }
 class LinkedList {
-    Node head;
+    Node head; 
     private int size;
     public void addFirst(int data) {
         Node newNode = new Node(data);

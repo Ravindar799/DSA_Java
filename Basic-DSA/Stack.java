@@ -35,7 +35,7 @@ class Temp {
         for (int n : stack) {
             System.out.println(n);
         }
-    }
+    }  
     public boolean isEmpty() {
         return top<=0;
     }
