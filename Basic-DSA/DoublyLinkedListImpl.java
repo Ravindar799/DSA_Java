@@ -1,128 +1,75 @@
-import java.util.Scanner; 
+import java.util.Scanner;
 class Node {
-    int data ;
+    int data;
+    Node prev;
     Node next;
-    Node(int data) {
+    Node (int data) {
         this.data = data;
         this.next = null;
+        this.prev = null;
     }
- }
- interface List {
+
+}
+interface Doubly {
     public void addFirst(int data);
     public void addLast(int data);
+    public void printList();
     public void deleteFirst();
     public void deleteLast();
-    public void addNode(int index, int data);
     public void deleteNode(int index);
-    public int getSize();
-    public void printList();
- }
-class LinkedList implements List {
-    private Node head; 
-    private int size = 0;
+    public void addNode(int index, int data);
+}
+class DoublyLL implements Doubly {
+    private Node head;
     public void addFirst(int data) {
-        Node newNode = new Node(data);
-        if(head == null) {
-            head = newNode;
-            size++;
-            return;
-        }
-        newNode.next = head ;
-        head  = newNode; 
-        size++;
-    }
-
-    public void  addLast(int data) {
-        Node newNode = new Node(data);
-        if(head == null) {
-            head = newNode;
-            size++;
-            return;
-        }
-        Node firstNode = head;
-        while (firstNode.next != null) {
-            firstNode = firstNode.next;
-        }
-        firstNode.next = newNode;
-        size++;
-    }
-
-    public void printList() {
-        if(head == null) {
-            System.out.println("list is empty:");
-        }
-        Node firstNode = head;
-        while (firstNode != null) {
-            System.out.print(firstNode.data + " ");
-            firstNode = firstNode.next;
-        }
-    }
-
-    public void deleteFirst() {
+    Node newNode = new Node(data);
         if (head == null) {
+            head = newNode;
+            return;
+        }
+        newNode.next = head;
+        head.prev = newNode;
+        head = newNode;
+    }
+
+    public void addLast(int data) {
+        Node newNode = new Node(data);
+        if(head == null) {
+            head = newNode;
+            return;
+        }
+        Node frontNode = head;
+        while (frontNode.next != null) {
+            frontNode = frontNode.next;
+        }
+        frontNode.next = newNode;
+        newNode.prev = frontNode.next;
+    }
+
+     public void printList() {
+        if(head == null) {
             System.out.println("list is empty:");
+            return;
+        }
+        Node frontNode = head;
+        while (frontNode != null) {
+            System.out.print(frontNode.data + " ");
+            frontNode = frontNode.next;
+        }
+    }
+
+    public void deleteFirst() { 
+        if(head == null) {
+           System.out.println("doubly Linked list is empty:");
             return;
         }
         head = head.next;
-        size--;
+        head.next.prev = null;
     }
 
-    public void deleteNode(int index) {
-        if (head == null) {
-            System.out.println("list is empty:");
-            return;
-        }
-        Node frontNode = head;
-        Node backNode = head;
-        int count = 0;
-        if (index == 0) {
-            deleteFirst();
-            return;
-        }
-        while(index >= 0 & backNode.next != null ) {
-            count++;
-            frontNode = backNode;
-            backNode = backNode.next;
-            if(index == count) {
-                frontNode.next = backNode.next;
-                size--;
-                return;
-            }
-        }
-        if (index != count) {
-            System.out.println("index out of bound:");
-        }
-    }
-
-    public void addNode(int index,int data) { 
-        Node newNode = new Node(data);
-        if (head == null) {
-            System.out.println("list is empty:");
-            return;
-        }
-        if (index == 0) {
-            addFirst(data);
-            return;
-        }
-        int count =0;
-        Node frontNode = head;
-        Node backNode = head;
-        while( index >= 0 & backNode.next != null ) {
-            count++;
-            frontNode = backNode;
-            backNode = backNode.next;
-            if(index == count) {
-                frontNode.next = newNode;
-                newNode.next = backNode;
-                size++;
-                return;
-            }
-        }
-    }
-
-    public void  deleteLast() {
-        if (head == null) {
-            System.out.println("list is empty:");
+    public void deleteLast() {
+        if(head == null) {
+           System.out.println("doubly Linked list is empty:");
             return;
         }
         if(head.next == null) {
@@ -131,22 +78,65 @@ class LinkedList implements List {
         }
         Node frontNode = head;
         Node backNode = head;
-        while (backNode.next  != null) {
+        while (backNode.next != null) {
             frontNode = backNode;
             backNode = backNode.next;
         }
         frontNode.next = null;
-        size--;
     }
 
-    public int getSize() {
-        return size;
+    public void deleteNode(int index) {
+        if(head == null) {
+            System.out.println("LinkedList is empty:");
+            return;
+        }
+        if(index == 0){
+            deleteLast();
+            return;
+        }
+        int count = 0;
+        Node frontNode = head;
+        Node backNode = head;
+        while (index >= 0 & backNode.next != null) {
+            count++;
+            frontNode = backNode;
+            backNode = backNode.next;
+            if(count == index){
+                frontNode.next = backNode.next;
+            }
+        }
     }
+
+    public void addNode(int index, int data) {
+        Node newNode = new Node(data);
+        if(head == null) {
+            System.out.println("LinkedList is empty:");
+            return;
+        }
+        if(index == 0){
+            addFirst(data);
+            return;
+        }
+        int count = 0;
+        Node frontNode = head;
+        Node backNode = head;
+        while(backNode.next != null) {
+            count++;
+            frontNode = backNode;
+            backNode = backNode.next;
+            if(count == index) {
+                newNode.next = backNode;
+                newNode.prev = frontNode;
+                frontNode.next = newNode;
+                backNode.prev = newNode;
+            }
+        }
+    } 
 
 }
-public class LinkedListImpl {
+public class DoublyLinkedListImpl {
     public static void main (String [] args) {
-        LinkedList l = new LinkedList();
+        DoublyLL l = new DoublyLL();
         int temp = 1;
         Scanner sc = new  Scanner(System.in);
         while (temp != 0) { 
@@ -157,7 +147,6 @@ public class LinkedListImpl {
             System.out.println("enter 5 to deleteNode:");
             System.out.println("enter 6 to addNode:");
             System.out.println("enter 7 to printlist:");
-            System.out.println("enter 8 to getsize:");
             System.out.println("enter 0 to exit:");
             int choice = sc.nextInt();
             if(choice == 1) {
@@ -190,9 +179,6 @@ public class LinkedListImpl {
             else if (choice == 7) {
                 l.printList();
             }
-            else if(choice == 8) {
-                l.getSize();
-            }
             else if (choice == 0) {
                 temp  = 0;
             }
@@ -201,4 +187,5 @@ public class LinkedListImpl {
             }
         }
     }
+
 }
