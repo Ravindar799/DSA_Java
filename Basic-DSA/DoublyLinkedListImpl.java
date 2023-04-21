@@ -183,7 +183,7 @@ public class DoublyLinkedListImpl {
                 temp  = 0;
             }
             else {
-                System.out.println("invalid choice:");
+                System.out.println("invalid choice :");
             }
         }
     }

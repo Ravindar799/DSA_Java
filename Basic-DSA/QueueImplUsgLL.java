@@ -51,6 +51,7 @@ public class QueueImplUsgLL {
         q.enQueue(3);
         q.deQueue();
         q.printList();
+        q.deQueue();
 
     }
 }

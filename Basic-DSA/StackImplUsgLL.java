@@ -46,11 +46,11 @@ class StackImpl {
 public class StackImplUsgLL {
     public static void main (String arr[]) {
         StackImpl s = new StackImpl();
-        // s.push(12);
-        // s.push(34);
-        // s.push(45);
-        // s.push(55);
-        // System.out.println(s.pop() +" ");
+        s.push(12);
+        s.push(34);
+        s.push(45);
+        s.push(55);
+        System.out.println(s.pop() +" ");
         s.printList();
         System.out.println("\n"+ s.peek());
     }

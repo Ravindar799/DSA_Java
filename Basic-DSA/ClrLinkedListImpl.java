@@ -105,5 +105,6 @@ class ClrLinkedListImpl {
         l.addLast(132);
         l.deleteAtIndex(1);
         l.printList();
+        l.addLast();
     }
 }
